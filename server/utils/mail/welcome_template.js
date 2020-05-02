@@ -24,19 +24,7 @@ const welcome = () => {
                             Waves is a leading retailer of musical instruments, lessons, repairs
                             and rentals in the U.S. With nearly 300 stores across the U.S. and
                             one of the top direct sales websites in the industry, Waves has
-                            helped people make music for more than 50 years. Waves also provides
-                            customers with various musician-based services, including Waves
-                            Lessons, where musicians of all ages and skill levels can learn to
-                            play a variety of instruments in many music genres; GC Repairs, an
-                            on-site maintenance and repairs service; and GC Rentals, a program
-                            offering easy rentals of instruments and other sound reinforcement
-                            gear. Additionally, Waves’s sister brands include Music & Arts,
-                            which operates more than 200 stores specializing in band &
-                            orchestral instruments for sale and rental, serving teachers, band
-                            directors, college professors and students, and Musician’s Friend, a
-                            leading direct marketer of musical instruments in the United States.
-                            With an unrivaled in-store experience and passionate commitment to
-                            making gear easy-to-buy, Waves is all about enabling musicians and
+                            helped people make music for more than 50 years. Waves is all about enabling musicians and
                             non-musicians alike to experience the almost indescribable joy that
                             comes from playing an instrument.
                             </p></td>
