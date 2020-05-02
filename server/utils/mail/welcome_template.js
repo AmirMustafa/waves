@@ -21,7 +21,24 @@ const welcome = () => {
                     <tr>
                         <td style="background-color: #999592; margin: 0 auto;">
                             <p style="box-sizing: border-box; color: white; font-family: Helvetica, Arial, sans-serif; letter-spacing: 0.5px; line-height: 1.4; margin: 0; padding: 15px 25px; text-align: center; text-transform: uppercase;font-size:10px">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Waves is a leading retailer of musical instruments, lessons, repairs
+                            and rentals in the U.S. With nearly 300 stores across the U.S. and
+                            one of the top direct sales websites in the industry, Waves has
+                            helped people make music for more than 50 years. Waves also provides
+                            customers with various musician-based services, including Waves
+                            Lessons, where musicians of all ages and skill levels can learn to
+                            play a variety of instruments in many music genres; GC Repairs, an
+                            on-site maintenance and repairs service; and GC Rentals, a program
+                            offering easy rentals of instruments and other sound reinforcement
+                            gear. Additionally, Waves’s sister brands include Music & Arts,
+                            which operates more than 200 stores specializing in band &
+                            orchestral instruments for sale and rental, serving teachers, band
+                            directors, college professors and students, and Musician’s Friend, a
+                            leading direct marketer of musical instruments in the United States.
+                            With an unrivaled in-store experience and passionate commitment to
+                            making gear easy-to-buy, Waves is all about enabling musicians and
+                            non-musicians alike to experience the almost indescribable joy that
+                            comes from playing an instrument.
                             </p></td>
                     </tr>
                 </table>
