@@ -40,6 +40,35 @@ const { Site } = require("./models/site");
 const { auth } = require("./middleware/auth");
 const { admin } = require("./middleware/admin");
 
+// Utils
+const { sendEmail } = require("./utils/mail/index");
+
+// const smtpTransport = mailer.createTransport({
+//   service: "Gmail",
+//   auth: {
+//     user: "info.waves.dev@gmail.com",
+//     pass: "Waves@713301",
+//   },
+// });
+
+// let mail = {
+//   from: "Waves <info.waves.dev@gmail.com>",
+//   to: "amirengg15@gmail.com",
+//   subject: "Send test mail",
+//   text: "Testing our waves mail",
+//   html: "<b>Welcome to Waves</b>",
+// };
+
+// smtpTransport.sendMail(mail, (error, response) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log("email sent");
+//   }
+
+//   smtpTransport.close();
+// });
+
 //=================================
 //             PRODUCTS
 //=================================
@@ -204,7 +233,8 @@ app.post("/api/users/register", (req, res) => {
 
   user.save((err, doc) => {
     if (err) return res.json({ success: false, err });
-    res.status(200).json({
+    sendEmail(doc.email, doc.name, null, "welcome");
+    return res.status(200).json({
       success: true,
     });
   });
