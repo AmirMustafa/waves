@@ -45,12 +45,12 @@ const { admin } = require("./middleware/admin");
 const { sendEmail } = require("./utils/mail/index");
 
 // Post order
-const date = new Date();
-const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(
-  "2423423421"
-)
-  .toString()
-  .substring(0, 8)}`;
+// const date = new Date();
+// const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(
+//   "2423423421"
+// )
+//   .toString()
+//   .substring(0, 8)}`;
 
 // const smtpTransport = mailer.createTransport({
 //   service: "Gmail",
@@ -389,11 +389,8 @@ app.post("/api/users/successBuy", auth, (req, res) => {
 
   // Post order
   const date = new Date();
-  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(
-    req.user._id
-  )
-    .toString()
-    .substring(0, 8)}`;
+  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(req.user._id).toString()
+              .substring(0, 8)}`;
 
   // user history
   req.body.cartDetail.forEach((item) => {
