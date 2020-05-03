@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
-const SHA1 = require("crypto-js/SHA1");
+// const SHA1 = require("crypto-js/SHA1");
 
 const app = express();
 const mongoose = require("mongoose");
@@ -389,8 +389,10 @@ app.post("/api/users/successBuy", auth, (req, res) => {
 
   // Post order
   const date = new Date();
-  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(req.user._id).toString()
-              .substring(0, 8)}`;
+  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-Math.random().toString(8).slice(2); }`;
+
+  // const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(req.user._id).toString()
+  //             .substring(0, 8)}`;
 
   // user history
   req.body.cartDetail.forEach((item) => {
