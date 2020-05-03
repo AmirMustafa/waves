@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
+const SHA1 = require("crypto-js/SHA1");
 
 const app = express();
 const mongoose = require("mongoose");
@@ -42,6 +43,14 @@ const { admin } = require("./middleware/admin");
 
 // Utils
 const { sendEmail } = require("./utils/mail/index");
+
+// Post order
+const date = new Date();
+const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(
+  "2423423421"
+)
+  .toString()
+  .substring(0, 8)}`;
 
 // const smtpTransport = mailer.createTransport({
 //   service: "Gmail",
@@ -378,9 +387,18 @@ app.post("/api/users/successBuy", auth, (req, res) => {
   let history = [];
   let transactionData = {};
 
+  // Post order
+  const date = new Date();
+  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(
+    req.user._id
+  )
+    .toString()
+    .substring(0, 8)}`;
+
   // user history
   req.body.cartDetail.forEach((item) => {
     history.push({
+      porder: po,
       dateOfPurchase: Date.now(),
       name: item.name,
       brand: item.brand.name,
@@ -398,7 +416,10 @@ app.post("/api/users/successBuy", auth, (req, res) => {
     lastname: req.user.lastname,
     email: req.user.email,
   };
-  transactionData.data = req.body.paymentData;
+  transactionData.data = {
+    ...req.body.paymentData,
+    porder: po,
+  };
   transactionData.product = history;
 
   User.findOneAndUpdate(
@@ -432,6 +453,9 @@ app.post("/api/users/successBuy", auth, (req, res) => {
           },
           (err) => {
             if (err) return res.json({ success: false, err });
+
+            // send mail for purchase order
+            sendEmail(user.email, user.name, null, "purchase", transactionData);
             res.status(200).json({
               success: true,
               cart: user.cart,
