@@ -387,9 +387,16 @@ app.post("/api/users/successBuy", auth, (req, res) => {
   let history = [];
   let transactionData = {};
 
+  const  randomString = (length, chars) => {
+      let result = '';
+      for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+      return result;
+  }
+
   // Post order
   const date = new Date();
-  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-Math.random().toString(8).slice(2); }`;
+  rString = randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${rString}`;
 
   // const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(req.user._id).toString()
   //             .substring(0, 8)}`;
