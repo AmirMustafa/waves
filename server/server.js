@@ -79,6 +79,57 @@ const { sendEmail } = require("./utils/mail/index");
 // });
 
 //=================================
+//         MULTER - File Upload
+//=================================
+const multer = require("multer");
+let storage = multer.diskStorage({
+  // basic config for multer
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+  // fileFilter:(req,file,cb)=>{
+
+  //     const ext = path.extname(file.originalname)
+  //     if(ext !== '.jpg' && ext !== '.png'){
+  //         return cb(res.status(400).end('only jpg, png is allowed'),false);
+  //     }
+
+  //     cb(null,true)
+  // }
+});
+
+const upload = multer({ storage: storage }).single("file"); // single = single file upload - file name received from drop zone - client - add_file.js dropzone
+
+app.post("/api/users/uploadfile", auth, admin, (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    return res.json({ success: true });
+  });
+});
+
+// Reading files uploaded in directory
+const fs = require("fs");
+const path = require("path");
+
+app.get("/api/users/admin_files", auth, admin, (req, res) => {
+  const dir = path.resolve(".") + "/uploads/";
+  fs.readdir(dir, (err, items) => {
+    return res.status(200).send(items);
+  });
+});
+
+// Download file
+app.get("/api/users/download/:id", auth, admin, (req, res) => {
+  const file = path.resolve(".") + `/uploads/${req.params.id}`;
+  res.download(file);
+});
+
+//=================================
 //             PRODUCTS
 //=================================
 
@@ -387,15 +438,19 @@ app.post("/api/users/successBuy", auth, (req, res) => {
   let history = [];
   let transactionData = {};
 
-  const  randomString = (length, chars) => {
-      let result = '';
-      for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-      return result;
-  }
+  const randomString = (length, chars) => {
+    let result = "";
+    for (let i = length; i > 0; --i)
+      result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  };
 
   // Post order
   const date = new Date();
-  rString = randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  rString = randomString(
+    8,
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  );
   const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${rString}`;
 
   // const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1(req.user._id).toString()

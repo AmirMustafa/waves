@@ -29,6 +29,10 @@ const admin = [
   {
     name: "Manage categories",
     linkTo: "/admin/manage_categories"
+  },
+  {
+    name: "Upload File",
+    linkTo: "/admin/add_file"
   }
 ];
 
