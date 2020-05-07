@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const { welcome } = require("./welcome_template.js");
 const { purchase } = require("./purchase_template.js");
+const { resetPass } = require("./reset_password.js");
 
 const getEmailData = (to, name, token, template, actionData) => {
   let data = null;
@@ -24,6 +25,13 @@ const getEmailData = (to, name, token, template, actionData) => {
         html: purchase(actionData),
       };
       break;
+    case "reset_password":
+      data = {
+        from: "Waves <info.waves.dev@gmail.com>",
+        to,
+        subject: `Hey ${name}, reset your password here`,
+        html: resetPass(actionData),
+      };
     default:
       data;
   }

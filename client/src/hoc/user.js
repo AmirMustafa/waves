@@ -5,39 +5,39 @@ import { connect } from "react-redux";
 const links = [
   {
     name: "My account",
-    linkTo: "/user/dashboard"
+    linkTo: "/user/dashboard",
   },
   {
     name: "User information",
-    linkTo: "/user/user_profile"
+    linkTo: "/user/user_profile",
   },
   {
     name: "My Cart",
-    linkTo: "/user/cart"
-  }
+    linkTo: "/user/cart",
+  },
 ];
 
 const admin = [
   {
     name: "Site info",
-    linkTo: "/admin/site_info"
+    linkTo: "/admin/site_info",
   },
   {
     name: "Add products",
-    linkTo: "/admin/add_product"
+    linkTo: "/admin/add_product",
   },
   {
     name: "Manage categories",
-    linkTo: "/admin/manage_categories"
+    linkTo: "/admin/manage_categories",
   },
-  {
-    name: "Upload File",
-    linkTo: "/admin/add_file"
-  }
+  // {
+  //   name: "Upload File",
+  //   linkTo: "/admin/add_file"
+  // }
 ];
 
-const UserLayout = props => {
-  const generateLinks = links =>
+const UserLayout = (props) => {
+  const generateLinks = (links) =>
     links.map((item, i) => (
       <Link to={item.linkTo} key={i}>
         {item.name}
@@ -64,9 +64,9 @@ const UserLayout = props => {
 };
 
 // redux is used to check if route is authenticated
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

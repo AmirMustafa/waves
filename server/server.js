@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
+const moment = require("moment");
 // const SHA1 = require("crypto-js/SHA1");
 
 const app = express();
@@ -275,6 +276,49 @@ app.get("/api/product/brands", (req, res) => {
 //              USERS
 //=================================
 
+app.post("/api/users/reset_user", (req, res) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    user.generateResetToken((err, user) => {
+      if (err) return res.json({ success: false, err });
+
+      sendEmail(user.email, user.name, null, "reset_password", user);
+      return res.json({ success: true });
+    });
+  });
+});
+
+app.post("/api/users/reset_password", (req, res) => {
+  var today = moment().startOf("day").valueOf();
+
+  User.findOne(
+    {
+      resetToken: req.body.resetToken,
+      resetTokenExp: {
+        $gte: today,
+      },
+    },
+    (err, user) => {
+      if (!user)
+        return res.json({
+          success: false,
+          message: "Sorry, token bad, generate a new one.",
+        });
+
+      // goes to the userSchema.pre("save", function (next) {} of user model and update in db
+      user.password = req.body.password;
+      user.resetToken = "";
+      user.resetTokenExp = "";
+
+      user.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+          success: true,
+        });
+      });
+    }
+  );
+});
+
 app.get("/api/users/auth", auth, (req, res) => {
   res.status(200).json({
     isAdmin: req.user.role === 0 ? false : true,
@@ -352,7 +396,7 @@ app.get("/api/users/removeimage", auth, admin, (req, res) => {
   let image_id = req.query.public_id;
 
   cloudinary.uploader.destroy(image_id, (error, result) => {
-    if (error) return res.json({ succes: false, error });
+    if (error) return res.json({ success: false, error });
     res.status(200).send("ok");
   });
 });
