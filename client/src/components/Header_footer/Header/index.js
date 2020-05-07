@@ -12,40 +12,40 @@ class Headers extends Component {
       {
         name: "Home",
         linkTo: "/",
-        public: true
+        public: true,
       },
       {
         name: "Guitars",
         linkTo: "/shop",
-        public: true
-      }
+        public: true,
+      },
     ],
     user: [
       {
         name: "My Cart",
         linkTo: "/user/cart",
-        public: false
+        public: false,
       },
       {
         name: "My Account",
         linkTo: "/user/dashboard",
-        public: false
+        public: false,
       },
       {
         name: "Log in",
         linkTo: "/register_login",
-        public: true
+        public: true,
       },
       {
         name: "Log out",
         linkTo: "/user/logout",
-        public: false
-      }
-    ]
+        public: false,
+      },
+    ],
   };
 
   logoutHandler = () => {
-    this.props.dispatch(logoutUser()).then(response => {
+    this.props.dispatch(logoutUser()).then((response) => {
       if (response.payload.success) {
         this.props.history.push("/");
       }
@@ -76,12 +76,12 @@ class Headers extends Component {
         {item.name}
       </Link>
     );
-  showLinks = type => {
+  showLinks = (type) => {
     console.log(type);
     let list = [];
 
     if (this.props.user.userData) {
-      type.forEach(item => {
+      type.forEach((item) => {
         if (!this.props.user.userData.isAuth) {
           // log out case links
           if (item.public === true) {
@@ -109,7 +109,9 @@ class Headers extends Component {
       <header className="bck_b_light">
         <div className="container">
           <div className="left">
-            <div className="logo">WAVES</div>
+            <div className="logo">
+              <Link to={"/"}> WAVES</Link>
+            </div>
           </div>
           <div className="right">
             <div className="top">{this.showLinks(this.state.user)}</div>
@@ -123,7 +125,7 @@ class Headers extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
   };
 }
 export default connect(mapStateToProps)(withRouter(Headers));
